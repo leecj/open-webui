@@ -1641,6 +1641,12 @@ RAG_WEB_SEARCH_ENGINE = PersistentConfig(
     os.getenv("RAG_WEB_SEARCH_ENGINE", ""),
 )
 
+BOCHA_SEARCH_API_KEY = PersistentConfig(
+    "BOCHA_SEARCH_API_KEY",
+    "rag.web.search.bocha_search_api_key",
+    os.getenv("BOCHA_SEARCH_API_KEY", ""),
+)
+
 # You can provide a list of your own websites to filter after performing a web search.
 # This ensures the highest level of safety and reliability of the information sources.
 RAG_WEB_SEARCH_DOMAIN_FILTER_LIST = PersistentConfig(

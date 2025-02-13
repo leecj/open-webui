@@ -45,6 +45,7 @@ from open_webui.retrieval.web.utils import get_web_loader
 from open_webui.retrieval.web.brave import search_brave
 from open_webui.retrieval.web.kagi import search_kagi
 from open_webui.retrieval.web.mojeek import search_mojeek
+from open_webui.retrieval.web.bocha import search_bocha
 from open_webui.retrieval.web.duckduckgo import search_duckduckgo
 from open_webui.retrieval.web.google_pse import search_google_pse
 from open_webui.retrieval.web.jina_search import search_jina
@@ -378,6 +379,7 @@ async def get_rag_config(request: Request, user=Depends(get_admin_user)):
                 "google_pse_engine_id": request.app.state.config.GOOGLE_PSE_ENGINE_ID,
                 "brave_search_api_key": request.app.state.config.BRAVE_SEARCH_API_KEY,
                 "kagi_search_api_key": request.app.state.config.KAGI_SEARCH_API_KEY,
+                "bocha_search_api_key": request.app.state.config.BOCHA_SEARCH_API_KEY,
                 "mojeek_search_api_key": request.app.state.config.MOJEEK_SEARCH_API_KEY,
                 "serpstack_api_key": request.app.state.config.SERPSTACK_API_KEY,
                 "serpstack_https": request.app.state.config.SERPSTACK_HTTPS,
@@ -426,6 +428,7 @@ class WebSearchConfig(BaseModel):
     google_pse_api_key: Optional[str] = None
     google_pse_engine_id: Optional[str] = None
     brave_search_api_key: Optional[str] = None
+    bocha_search_api_key: Optional[str] = None
     kagi_search_api_key: Optional[str] = None
     mojeek_search_api_key: Optional[str] = None
     serpstack_api_key: Optional[str] = None
@@ -523,6 +526,9 @@ async def update_rag_config(
         request.app.state.config.MOJEEK_SEARCH_API_KEY = (
             form_data.web.search.mojeek_search_api_key
         )
+        request.app.state.config.BOCHA_SEARCH_API_KEY = (
+            form_data.web.search.bocha_search_api_key
+        )
         request.app.state.config.SERPSTACK_API_KEY = (
             form_data.web.search.serpstack_api_key
         )
@@ -581,6 +587,7 @@ async def update_rag_config(
                 "enabled": request.app.state.config.ENABLE_RAG_WEB_SEARCH,
                 "engine": request.app.state.config.RAG_WEB_SEARCH_ENGINE,
                 "searxng_query_url": request.app.state.config.SEARXNG_QUERY_URL,
+                "bocha_search_api_key": request.app.state.config.BOCHA_SEARCH_API_KEY,
                 "google_pse_api_key": request.app.state.config.GOOGLE_PSE_API_KEY,
                 "google_pse_engine_id": request.app.state.config.GOOGLE_PSE_ENGINE_ID,
                 "brave_search_api_key": request.app.state.config.BRAVE_SEARCH_API_KEY,
@@ -1164,6 +1171,16 @@ def search_web(request: Request, engine: str, query: str) -> list[SearchResult]:
             )
         else:
             raise Exception("No KAGI_SEARCH_API_KEY found in environment variables")
+    elif engine == "bocha":
+        if request.app.state.config.BOCHA_SEARCH_API_KEY:
+            return search_bocha(
+                request.app.state.config.BOCHA_SEARCH_API_KEY,
+                query,
+                request.app.state.config.RAG_WEB_SEARCH_RESULT_COUNT,
+                request.app.state.config.RAG_WEB_SEARCH_DOMAIN_FILTER_LIST,
+            )
+        else:
+            raise Exception("No BOCHA_SEARCH_API_KEY found in environment variables")
     elif engine == "mojeek":
         if request.app.state.config.MOJEEK_SEARCH_API_KEY:
             return search_mojeek(
