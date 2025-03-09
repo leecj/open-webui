@@ -137,7 +137,7 @@
 />
 
 <div class="w-full h-screen max-h-[100dvh] text-white relative">
-	<div class="w-full h-full absolute top-0 left-0 bg-white dark:bg-black"></div>
+	<div class="w-full h-full absolute top-0 left-0 bg-white dark:bg-black" style="background: no-repeat fixed center / cover url('https://oss233.oss-cn-hangzhou.aliyuncs.com/wrbg.jpg');"></div>
 
 	<div class="w-full absolute top-0 left-0 right-0 h-8 drag-region" />
 
@@ -158,7 +158,7 @@
 		<div
 			class="fixed bg-transparent min-h-screen w-full flex justify-center font-primary z-50 text-black dark:text-white"
 		>
-			<div class="w-full sm:max-w-md px-10 min-h-screen flex flex-col text-center">
+			<div class="w-full sm:max-w-md px-10 min-h-screen flex flex-col text-center" style="margin-left:65vw;">
 				{#if ($config?.features.auth_trusted_header ?? false) || $config?.features.auth === false}
 					<div class=" my-auto pb-10 w-full">
 						<div
