@@ -137,7 +137,7 @@
 />
 
 <div class="w-full h-screen max-h-[100dvh] text-white relative">
-	<div class="w-full h-full absolute top-0 left-0 bg-white dark:bg-black" style="background: no-repeat fixed center / cover url('https://oss233.oss-cn-hangzhou.aliyuncs.com/wrbg.jpg');"></div>
+	<div class="w-full h-full absolute top-0 left-0 bg-white dark:bg-black" style="background: no-repeat fixed center / cover url('{WEBUI_BASE_URL}/static/wrbg.jpg');"></div>
 
 	<div class="w-full absolute top-0 left-0 right-0 h-8 drag-region" />
 
