@@ -7,7 +7,7 @@
 
 	const dispatch = createEventDispatcher();
 
-	import { config, user, models as _models, temporaryChatEnabled } from '$lib/stores';
+	import { WEBUI_NAME,config, user, models as _models, temporaryChatEnabled } from '$lib/stores';
 	import { sanitizeResponseContent, findWordIndices } from '$lib/utils';
 	import { WEBUI_BASE_URL } from '$lib/constants';
 
@@ -137,11 +137,7 @@
 				</div>
 
 				<div class=" text-3xl @sm:text-4xl line-clamp-1" in:fade={{ duration: 100 }}>
-					{#if models[selectedModelIdx]?.name}
-						{models[selectedModelIdx]?.name}
-					{:else}
-						{$i18n.t('Hello, {{name}}', { name: $user.name })}
-					{/if}
+					{$WEBUI_NAME}
 				</div>
 			</div>
 
